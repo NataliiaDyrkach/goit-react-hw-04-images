@@ -8,7 +8,6 @@ import Loader from './Loader/Loader';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 
-
 function App() {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -44,8 +43,10 @@ function App() {
         .catch(error => setError(error))
         .finally(() => setIsLoading(false));
     }
+  }, [query, error]);
 
-    if (page !== 1) {
+  useEffect(() => {
+    if (page !== 1 && page > 1) {
       setIsLoading(true);
 
       fetchImages(query, page)
@@ -68,7 +69,6 @@ function App() {
         .finally(() => setIsLoading(false));
     }
   }, [query, page, error]);
-
 
   const handleFormSubmit = query => setQuery(query);
 
